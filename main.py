@@ -26,16 +26,14 @@ async def emojigen(
     ctx: discord.ApplicationContext,
     text: Option(str, "content text"),
     color: Option(str, "font color (default: #000000FF)", default="#000000FF"),
-    background_color: Option(str, "back ground color (default: #00000000)", default="#00000000"),
     align: Option(str, "choose text align (default: center)", choices=["left", "center", "right"], default="center"),
     font: Option(str, "choose font (default: NotoSansJP-Regular", choices=font_map.keys(), default="NotoSansJP-Regular")
     ):
-    
+
     text = text.replace('\\n', '\n')
     data = emojilib.generate(
         text=text,
         color=color,
-        background_color=background_color,
         align=align,
         typeface_file=font_map[font],
         width=128,
@@ -54,7 +52,6 @@ async def emojireg(
     name: Option(str, "emoji name"),
     text: Option(str, "content text"),
     color: Option(str, "font color (default: #000000FF)", default="#000000FF"),
-    background_color: Option(str, "back ground color (default: #00000000)", default="#00000000"),
     align: Option(str, "choose text align (default: center)", choices=["left", "center", "right"], default="center"),
     font: Option(str, "choose font (default: NotoSansJP-Regular", choices=font_map.keys(), default="NotoSansJP-Regular")
     ):
@@ -63,7 +60,6 @@ async def emojireg(
     data = emojilib.generate(
         text=text,
         color=color,
-        background_color=background_color,
         align=align,
         typeface_file=font_map[font],
         width=128,
