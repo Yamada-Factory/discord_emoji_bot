@@ -30,8 +30,17 @@ async def emojigen(
     align: Option(str, "choose text align (default: center)", choices=["left", "center", "right"], default="center"),
     font: Option(str, "choose font (default: NotoSansJP-Regular", choices=font_map.keys(), default="NotoSansJP-Regular")
     ):
+    
     text = text.replace('\\n', '\n')
-    data = emojilib.generate(text=text, color=color, background_color=background_color, align=align, typeface_file=font_map[font], width=128, height=128)
+    data = emojilib.generate(
+        text=text,
+        color=color,
+        background_color=background_color,
+        align=align,
+        typeface_file=font_map[font],
+        width=128,
+        height=128
+    )
     fp = tempfile.TemporaryFile()
     fp.write(data)
     fp.seek(0)
@@ -49,9 +58,17 @@ async def emojireg(
     align: Option(str, "choose text align (default: center)", choices=["left", "center", "right"], default="center"),
     font: Option(str, "choose font (default: NotoSansJP-Regular", choices=font_map.keys(), default="NotoSansJP-Regular")
     ):
+    
     text = text.replace('\\n', '\n')
-    data = emojilib.generate(text=text, color=color, background_color=background_color, align=align, typeface_file=font_map[font], width=128, height=128)
-
+    data = emojilib.generate(
+        text=text,
+        color=color,
+        background_color=background_color,
+        align=align,
+        typeface_file=font_map[font],
+        width=128,
+        height=128
+    )
     emoji = await ctx.interaction.guild.create_custom_emoji(name=name, image=data)
 
     await ctx.respond(emoji)
