@@ -1,6 +1,9 @@
+from email.policy import default
+from random import choice
 import emojilib
 import discord
 from discord.commands import Option
+import colors
 
 import tempfile
 import os
@@ -21,29 +24,18 @@ def get_font_map():
 
 font_map = get_font_map()
 
-def format_color(color):
-    hasSharp = (color[0] == '#')
-    length = len(color)
-    if hasSharp:
-        length -= 1
-    if length == 6:
-        color += 'FF'
-    if not hasSharp:
-        color = '#' + color
-    return color
-
 
 @bot.slash_command(guild_ids=SCOPE)
 async def emojigen(
     ctx: discord.ApplicationContext,
     text: Option(str, "content text"),
-    color: Option(str, "font color (default: #000000)", default="#000000"),
+    color: Option(str, "font color (default: #000000)", choice=colors.color_list.keys(), default="black"),
     align: Option(str, "choose text align (default: center)", choices=["left", "center", "right"], default="center"),
     font: Option(str, "choose font (default: NotoSansJP-Regular", choices=font_map.keys(), default="NotoSansJP-Regular")
     ):
 
     text = text.replace('\\n', '\n')
-    color = format_color(color)
+    color = colors.choose_color(color)
     data = emojilib.generate(
         text=text,
         color=color,
@@ -70,7 +62,7 @@ async def emojireg(
     ):
     
     text = text.replace('\\n', '\n')
-    color = format_color(color)
+    color = colors.choose_color(color)
     data = emojilib.generate(
         text=text,
         color=color,
