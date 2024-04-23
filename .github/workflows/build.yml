@@ -25,7 +25,4 @@ jobs:
       - name: Docker Build
         id: docker_build
         run: |
-          docker buildx build \
-            --platform linux/amd64,linux/arm64 \
-            --tag discord-emoji-bot:latest \
-            .
+          docker buildx build --platform linux/amd64 --tag discord-emoji-bot:latest .
