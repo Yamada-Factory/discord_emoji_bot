@@ -75,5 +75,24 @@ async def emojireg(
 
     await ctx.respond(emoji)
 
+# refer to https://github.com/Pycord-Development/pycord/blob/20598d4a737e9f61631701e5e84fd2d4fd2cdacd/examples/create_private_emoji.py
+@bot.slash_command(guild_ids=SCOPE)
+async def add_emoji(
+    ctx: discord.ApplicationContext,
+    name: Option(str, "emoji name"),
+    image: Option(discord.Attachment, "image file"),
+    ):
+    allowed_content_types = [
+        "image/jpeg",
+        "image/png",
+    ]
+    if image.content_type not in allowed_content_types:
+        return await ctx.respond("Invalid attachment type.", ephemeral=True)
+
+    image_file = await image.read()
+
+    emoji = await ctx.interaction.guild.create_custom_emoji(name=name, image=image_file)
+    await ctx.respond(emoji)
+
 print('server started')
 bot.run(TOKEN)
